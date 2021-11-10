@@ -28,4 +28,5 @@ Route::middleware('auth') //devi essere autenticato
     ->prefix('admin')  // inserisci come prefisso nelle URI di tutte le route figlie admin 
     ->group(function () { // e raggruppale in:
         Route::get('/', 'HomeController@index')->name('home');
+        Route::resource('posts', 'PostController');
     });

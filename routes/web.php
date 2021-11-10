@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,15 +22,10 @@ Auth::routes();
 
 Route::middleware('auth')->get('/admin', 'Admin\HomeController@index')->name('admin.home');
 
-
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-// Route::middleware('auth')
-//     ->namespace('Admin')
-//     ->name('admin.')
-//     ->prefix('admin')
-//     ->group(function () {
-//         Route::get('/', 'HomeController@index')
-//         ->name('home');
-//     });
+Route::middleware('auth') //devi essere autenticato
+    ->namespace('Admin') // prendi i controller delle route tue figlie a partire dalla cartella Admin/
+    ->name('admin.') // aggiunge admin. a tutti i name
+    ->prefix('admin')  // inserisci come prefisso nelle URI di tutte le route figlie admin 
+    ->group(function () { // e raggruppale in:
+        Route::get('/', 'HomeController@index')->name('home');
+    });
